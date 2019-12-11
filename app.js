@@ -24,16 +24,28 @@
      let li = document.createElement('li');
      let name = document.createElement('span');
      let city = document.createElement('span');
+     let cross = document.createElement('div');
 
      // retrieving the id of the document
      li.setAttribute('data-id', doc.id);
      name.textContent = doc.data().name;
      city.textContent = doc.data().city;
+     cross.textContent = 'x';
 
      li.appendChild(name);
      li.appendChild(city);
+     li.appendChild(cross);
 
      cafeList.appendChild(li);
+
+     cross.addEventListener('click', function (event) {
+        event.stopPropagation();
+        // target is 'cross' element
+        // parentElement is 'li' element
+        let id = event.target.parentElement.getAttribute('data-id');
+        // doc(id) selects the document with the given id
+        db.collection('cafes').doc(id).delete();
+     });
  }
  // fetching cafe's collection data
  db.collection('cafes').get()
@@ -54,7 +66,7 @@
          name: cafeForm.name.value,
          city: cafeForm.city.value,
      });
- 
+
      cafeForm.name.value = '';
      cafeForm.city.value = '';
  });
