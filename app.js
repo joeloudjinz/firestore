@@ -17,13 +17,14 @@
  //      timestampsInSnapshots: true
  //  });
  const cafeList = document.querySelector('#cafe-list');
+ const cafeForm = document.querySelector('#add-cafe-form');
 
  // create elements & render the list
  function renderCafeList(doc) {
      let li = document.createElement('li');
      let name = document.createElement('span');
      let city = document.createElement('span');
-     
+
      // retrieving the id of the document
      li.setAttribute('data-id', doc.id);
      name.textContent = doc.data().name;
@@ -34,7 +35,7 @@
 
      cafeList.appendChild(li);
  }
- // fetches a collection by it's name
+ // fetching cafe's collection data
  db.collection('cafes').get()
      .then((snapshot) => {
          //  map throw all the documents 
@@ -45,3 +46,15 @@
      }).catch((error) => {
          console.log(error);
      });
+
+ cafeForm.addEventListener('submit', function (event) {
+     event.preventDefault();
+     // saving data to cafe's collection
+     db.collection('cafes').add({
+         name: cafeForm.name.value,
+         city: cafeForm.city.value,
+     });
+ 
+     cafeForm.name.value = '';
+     cafeForm.city.value = '';
+ });
