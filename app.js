@@ -47,25 +47,10 @@
          db.collection('cafes').doc(id).delete();
      });
  }
- // fetching cafe's collection data
- //  db.collection('cafes').get()
- //      .then((snapshot) => {
- //          //  map throw all the documents 
- //          snapshot
- //              .docs
- //              //  print out the data of the current document
- //              .map((doc) => renderCafeList(doc));
- //      }).catch((error) => {
- //          console.log(error);
- //      });
-
- // fetching results based on the condition in where clause
+ //  fetching cafe's collection data
  db.collection('cafes')
-     // value in the condition is case sensitive.
-     // this will select documents that have the city value starts with
-     // a letter that comes after 'B' in the alphabets.
-     // .where('city', '>', 'B')
-     .where('city', '==', 'In-Salah')
+     // it is case sensitive, capital letters sorted before lower case letters.
+     .orderBy('name')
      .get()
      .then((snapshot) => {
          //  map throw all the documents 
@@ -76,6 +61,24 @@
      }).catch((error) => {
          console.log(error);
      });
+
+ // fetching results based on the condition in where clause
+ //  db.collection('cafes')
+ // value in the condition is case sensitive.
+ // this will select documents that have the city value starts with
+ // a letter that comes after 'B' in the alphabets.
+ // .where('city', '>', 'B')
+ //  .where('city', '==', 'In-Salah')
+ //  .get()
+ //  .then((snapshot) => {
+ //      //  map throw all the documents 
+ //      snapshot
+ //          .docs
+ //          //  print out the data of the current document
+ //          .map((doc) => renderCafeList(doc));
+ //  }).catch((error) => {
+ //      console.log(error);
+ //  });
 
  cafeForm.addEventListener('submit', function (event) {
      event.preventDefault();
