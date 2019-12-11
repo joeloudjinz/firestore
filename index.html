@@ -37,6 +37,12 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        // getting a reference to our database
+        const db = firebase.firestore();
+        // to avoid errors in the console
+        db.settings({
+            timestampsInSnapshot: true
+        });
     </script>
 </body>
 
