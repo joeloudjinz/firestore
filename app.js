@@ -48,19 +48,19 @@
      });
  }
  //  fetching cafe's collection data
- db.collection('cafes')
-     // it is case sensitive, capital letters sorted before lower case letters.
-     .orderBy('name')
-     .get()
-     .then((snapshot) => {
-         //  map throw all the documents 
-         snapshot
-             .docs
-             //  print out the data of the current document
-             .map((doc) => renderCafeList(doc));
-     }).catch((error) => {
-         console.log(error);
-     });
+ //  db.collection('cafes')
+ // it is case sensitive, capital letters sorted before lower case letters.
+ //  .orderBy('name')
+ //  .get()
+ //  .then((snapshot) => {
+ //  map throw all the documents 
+ //  snapshot
+ //      .docs
+ //  print out the data of the current document
+ //          .map((doc) => renderCafeList(doc));
+ //  }).catch((error) => {
+ //      console.log(error);
+ //  });
 
  // fetching results based on the condition in where clause
  //  db.collection('cafes')
@@ -91,3 +91,18 @@
      cafeForm.name.value = '';
      cafeForm.city.value = '';
  });
+
+ // realtime changes
+ db.collection('cafes')
+     .orderBy('name')
+     .onSnapshot(function (snapshot) {
+         let changes = snapshot.docChanges();
+         changes.forEach(function (change) {
+             if (change.type === "added")
+                 renderCafeList(change.doc)
+             else if (change.type === 'removed') {
+                 const li = document.querySelector('[data-id=' + change.doc.id + ']');
+                 cafeList.removeChild(li);
+             }
+         });
+     });
