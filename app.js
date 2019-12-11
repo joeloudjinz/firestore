@@ -39,16 +39,34 @@
      cafeList.appendChild(li);
 
      cross.addEventListener('click', function (event) {
-        event.stopPropagation();
-        // target is 'cross' element
-        // parentElement is 'li' element
-        let id = event.target.parentElement.getAttribute('data-id');
-        // doc(id) selects the document with the given id
-        db.collection('cafes').doc(id).delete();
+         event.stopPropagation();
+         // target is 'cross' element
+         // parentElement is 'li' element
+         let id = event.target.parentElement.getAttribute('data-id');
+         // doc(id) selects the document with the given id
+         db.collection('cafes').doc(id).delete();
      });
  }
  // fetching cafe's collection data
- db.collection('cafes').get()
+ //  db.collection('cafes').get()
+ //      .then((snapshot) => {
+ //          //  map throw all the documents 
+ //          snapshot
+ //              .docs
+ //              //  print out the data of the current document
+ //              .map((doc) => renderCafeList(doc));
+ //      }).catch((error) => {
+ //          console.log(error);
+ //      });
+
+ // fetching results based on the condition in where clause
+ db.collection('cafes')
+     // value in the condition is case sensitive.
+     // this will select documents that have the city value starts with
+     // a letter that comes after 'B' in the alphabets.
+     // .where('city', '>', 'B')
+     .where('city', '==', 'In-Salah')
+     .get()
      .then((snapshot) => {
          //  map throw all the documents 
          snapshot
