@@ -54,4 +54,7 @@
          name: cafeForm.name.value,
          city: cafeForm.city.value,
      });
+ 
+     cafeForm.name.value = '';
+     cafeForm.city.value = '';
  });
